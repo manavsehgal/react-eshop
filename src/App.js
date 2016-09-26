@@ -1,18 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  Grid,
+  Navbar,
+  Nav,
+  NavItem,
+  Jumbotron,
+  Button } from 'react-bootstrap';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Navbar inverse fixedTop>
+          <Grid>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a href="/">React Eshop</a>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav pullRight>
+                <NavItem href="//github.com/manavsehgal/react-eshop">
+                  Code
+                </NavItem>
+                <NavItem href="//leanpub.com/reacteshop">
+                  Book
+                </NavItem>
+              </Nav>
+            </Navbar.Collapse>
+          </Grid>
+        </Navbar>
+        <Jumbotron>
+          <Grid>
+            <h1>Easily Reusable Eshop in React</h1>
+            <p>Eshop written in React, ES6, and Firebase.</p>
+            <p><Button bsStyle="success" bsSize="large">
+              Learn more
+            </Button></p>
+          </Grid>
+        </Jumbotron>
       </div>
     );
   }

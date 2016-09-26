@@ -13,7 +13,21 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <%
+      var title = 'React Eshop | Easily reusable Eshop in React';
+      var description = 'Reusable Eshop app in React, complete with a shopping cart, product catalog, and search.';
+    %>
+    <title><%= title%></title>
+    <meta name=”twitter:title” content="<%= title%>">
+    <meta property=og:title” content="<%= title%>">
+
+    <meta name="description" content="<%= description%>">
+    <meta name=”twitter:description” content="<%= description%>">
+    <meta property=og:description content="<%= description%>">
+
+    <meta name=”twitter:card” content=”summary” />
+    <meta property="og:site_name" content="React Eshop" />
+    <meta property=og:type content="website">
   </head>
   <body>
     <div id="root"></div>
