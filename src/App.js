@@ -1,14 +1,52 @@
 import React, { Component } from 'react';
+import ProductSummary from './ProductSummary';
 import {
-  Grid,
+  Grid, Row, Col,
   Navbar,
   Nav,
   NavItem,
-  Jumbotron,
-  Button } from 'react-bootstrap';
+  Jumbotron } from 'react-bootstrap';
+import bookThumb from './book-mock.jpg';
+import gigThumb from './gig-mock.jpg';
+import productsData from './products.json';
+
+const products = JSON.parse(JSON.stringify(productsData));
 
 class App extends Component {
   render() {
+    const productFeatured = Object.keys(products).map(key => {
+      return (products[key].featured
+        ? <ProductSummary
+              key={key}
+              name={products[key].name}
+              description={products[key].description}
+              price={products[key].price}
+              link={products[key].link}
+              thumb={products[key].category === 'Book' ? bookThumb : gigThumb}
+              category={products[key].category}
+              referral={products[key].referral ? true : false}
+              display="splash"
+            />
+        : null
+      );
+    });
+    const productCatalog = Object.keys(products).map(key => {
+      return (!products[key].featured
+        ? <Col xs={12} md={6} lg={3} key={key}>
+            <ProductSummary
+              name={products[key].name}
+              description={products[key].description}
+              price={products[key].price}
+              link={products[key].link}
+              thumb={products[key].category === 'Book' ? bookThumb : gigThumb}
+              category={products[key].category}
+              referral={products[key].referral ? true : false}
+              display="card"
+            />
+          </Col>
+        : null
+      );
+    });
     return (
       <div>
         <Navbar inverse fixedTop>
@@ -31,15 +69,10 @@ class App extends Component {
             </Navbar.Collapse>
           </Grid>
         </Navbar>
-        <Jumbotron>
-          <Grid>
-            <h1>Easily Reusable Eshop in React</h1>
-            <p>Eshop written in React, ES6, and Firebase.</p>
-            <p><Button bsStyle="success" bsSize="large">
-              Learn more
-            </Button></p>
-          </Grid>
-        </Jumbotron>
+        <Jumbotron>{productFeatured}</Jumbotron>
+        <Grid>
+          <Row>{productCatalog}</Row>
+        </Grid>
       </div>
     );
   }
