@@ -1,0 +1,25 @@
+.ProductDetail__summary {
+  font-size: 1.4em;
+}
+
+.ProductDetail__description {
+  margin-top: 10px;
+  font-size: 1.2em;
+}
+
+.ProductDetail__price {
+  font-size: 2em;
+  line-height: 2em;
+}
+
+.ProductDetail__about-price {
+  color: slategray;
+  font-size: 0.8em;
+}
+
+.ProductDetail__book-detail,
+.ProductDetail__gig-detail {
+  font-size: 1.2em;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
