@@ -6,6 +6,7 @@ import bookThumb from './book-mock.jpg';
 import gigThumb from './gig-mock.jpg';
 import productsData from './products.json';
 const products = JSON.parse(JSON.stringify(productsData));
+import { reDatabase } from './reFirebase';
 
 export default class ProductDetail extends Component {
   static propTypes = {
@@ -20,6 +21,18 @@ export default class ProductDetail extends Component {
     const slug = this.props.params.slug;
     const id = slug.substring(slug.indexOf('--') + 2);
     this.setState({ product: products[id] });
+  }
+  componentDidMount() {
+    const getProducts = (snap) => {
+      const productsFirebase = snap.val();
+      const slug = this.props.params.slug;
+      const id = slug.substring(slug.indexOf('--') + 2);
+      this.setState({
+        product: productsFirebase[id],
+        firebase: true
+      });
+    };
+    reDatabase.ref('products').once('value').then(getProducts);
   }
   // Get product button event handler
   getProduct() {
@@ -47,11 +60,13 @@ export default class ProductDetail extends Component {
       </Grid>;
 
     if (this.state.product) {
+      const mockThumb =
+        this.props.category === 'Book' ? bookThumb : gigThumb;
       const productThumb =
         <Thumbnail
           href="#"
-          src={this.state.product.category ===
-            'Book' ? bookThumb : gigThumb}
+          src={this.state.product.thumb
+            ? this.state.product.thumb : mockThumb}
           alt={this.state.product.name} />
 
       const price =

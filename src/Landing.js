@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
 import ProductSummary from './ProductSummary';
 import { Grid, Row, Col } from 'react-bootstrap';
-import bookThumb from './book-mock.jpg';
-import gigThumb from './gig-mock.jpg';
 import productsData from './products.json';
+import { reDatabase } from './reFirebase';
 import './Landing.css';
 
-const products = JSON.parse(JSON.stringify(productsData));
-
 export default class Landing extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productsData: JSON.parse(JSON.stringify(productsData)),
+      firebase: false
+    }
+  }
+  componentDidMount() {
+    const getProducts = (snap) => {
+      this.setState({
+        productsData: snap.val(),
+        firebase: true
+      });
+    };
+
+    // Swap ref().once with ref().on for realtime catalog updates
+    // Getting data once if obviously more performant, as app is
+    // not polling for changes
+
+    // reDatabase.ref('products').on('value', getProducts);
+    reDatabase.ref('products').once('value').then(getProducts);
+  }
   render() {
+    const products = this.state.productsData;
     const productFeatured = Object.keys(products).map(key => {
       return (products[key].featured
         ? <ProductSummary
@@ -20,7 +40,7 @@ export default class Landing extends Component {
               price={products[key].price}
               marketPrice={products[key].market_price}
               link={products[key].link}
-              thumb={products[key].category === 'Book' ? bookThumb : gigThumb}
+              thumb={this.state.firebase ? products[key].thumb : null}
               category={products[key].category}
               referral={products[key].referral}
               display="splash"
@@ -38,7 +58,7 @@ export default class Landing extends Component {
               price={products[key].price}
               marketPrice={products[key].market_price}
               link={products[key].link}
-              thumb={products[key].category === 'Book' ? bookThumb : gigThumb}
+              thumb={this.state.firebase ? products[key].thumb : null}
               category={products[key].category}
               referral={products[key].referral}
               display="card"

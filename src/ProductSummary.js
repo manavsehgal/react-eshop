@@ -1,19 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { Grid, Row, Col, Well, Thumbnail, Button, Glyphicon, Badge }
   from 'react-bootstrap';
+import bookThumb from './book-mock.jpg';
+import gigThumb from './gig-mock.jpg';
 
 export default class ProductSummary extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,
-    thumb: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     display: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
     marketPrice: PropTypes.number,
     referral: PropTypes.bool,
-    link: PropTypes.string
+    thumb: PropTypes.string,
+    link: PropTypes.string,
   }
   static defaultProps = {
     marketPrice: 0,
@@ -143,12 +145,14 @@ export default class ProductSummary extends Component {
     // Render this for call-to-action buttons
     const buttons = <p>{getProductButton} {productDetailButton}</p>;
 
+    const mockThumb = this.props.category === 'Book' ? bookThumb : gigThumb;
+
     // Render this for product thumb
     let productThumb =
       <Thumbnail
         href="#"
         onClick={this.productDetail}
-        src={this.props.thumb}
+        src={this.props.thumb ? this.props.thumb : mockThumb}
         alt={this.props.name} />;
 
     // Render this for product summary - splash or card (default) style
