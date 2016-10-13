@@ -61,7 +61,7 @@ export default class ProductDetail extends Component {
 
     if (this.state.product) {
       const mockThumb =
-        this.props.category === 'Book' ? bookThumb : gigThumb;
+        this.state.product.category === 'Book' ? bookThumb : gigThumb;
       const productThumb =
         <Thumbnail
           href="#"
