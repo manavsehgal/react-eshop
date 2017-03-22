@@ -75,9 +75,9 @@ export default class Navigation extends Component {
               </NavItem>
               {this.state.logout
                 ? <NavItem onClick={this.logout} href="">
-                    Logout <Glyphicon glyph="eject" /></NavItem>
+                    Logout <Glyphicon glyph="log-out" /></NavItem>
                 : <NavItem onClick={this.login} href="">
-                    Login <Glyphicon glyph="play" /></NavItem>}
+                    Login <Glyphicon glyph="transfer" /></NavItem>}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -93,15 +93,21 @@ export default class Navigation extends Component {
               </Col>
               <Col xs={12} md={6}>
                 <div className="Navigation__promo">
-                  {this.state.logout
-                    ? <span>Welcome back {reFirebase.authauth().currentUser.email}</span>
-                    : <span>Please login to add products to cart</span>}
-                  &nbsp;
                   <span>
                     {this.state.logout
-                    ? <Button bsStyle="default"><Glyphicon glyph="log-out" /> Logout</Button>
-                    : <Button bsStyle="primary"><Glyphicon glyph="transfer" /> Google Login</Button>}
+                    ? <Button onClick={this.logout} bsStyle="default">
+                        Logout <Glyphicon glyph="log-out" /></Button>
+                    : <Button onClick={this.login} bsStyle="primary">
+                        Google Login <Glyphicon glyph="transfer" /></Button>}
                   </span>
+                  &nbsp;&nbsp;
+                  {this.state.logout
+                    ? <span>
+                        Welcome back
+                        &nbsp;
+                        <strong>{reFirebase.auth().currentUser.email}</strong>
+                      </span>
+                    : <span>Please login to add products to your cart</span>}
                 </div>
               </Col>
             </Row>
